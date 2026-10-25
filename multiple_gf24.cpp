@@ -22,8 +22,8 @@ string ToBinary(uint8_t num, int num_bits = 8) {
 }
 
 unsigned int multiple_mod_single(string hesoB) {       // x.g(x) mod m(x)
-    uint8_t value1 = (uint8_t)string_to_bit(heso_dathuctoigian);
-    uint8_t value2 = (uint8_t)string_to_bit(hesoB) << 1; 
+    uint8_t value1 = 0x1B;  // he so da thuc sau dich: 00011011
+    uint8_t value2 = (uint8_t)string_to_bit(hesoB); 
 
 
     bool highest_bit = (value2 & 0x80) != 0;
@@ -41,8 +41,7 @@ unsigned int multiple_mod_single(string hesoB) {       // x.g(x) mod m(x)
 unsigned int multiple_mod_result(string heso1, string heso2) {
     unsigned int final_result = 0;
     for (int i = heso1.length() - 1; i >= 0; i--) {
-        char c = heso1[i];
-        if (c == '1') {
+        if (heso1[i] == '1') {
             final_result ^= multiple_mod_single(heso2);
         }
         unsigned int tmp = multiple_mod_single(heso2);
