@@ -2,8 +2,8 @@
 #include <cstdint>
 using namespace std;
 
-const int max_degree = 8;
-const string heso_dathuctoigian = "100011011";  // m(x) = x^8 + x^4 + x^3 + x + 1
+const int max_degree = 4;
+const string heso_dathuctoigian = "10011";  // m(x) = x^4 + x + 1
 
 unsigned int string_to_bit(string bit_string) {
     unsigned int value_bit = 0;
@@ -13,7 +13,7 @@ unsigned int string_to_bit(string bit_string) {
     return value_bit;
 }
 
-string NumToBinary(uint8_t num, int num_bits = 8) {
+string NumToBinary(uint8_t num, int num_bits = 4) {
     string result = "";
     for (int i = num_bits - 1; i >= 0; i--) {
         result += ((num >> i) & 1) ? '1' : '0';
@@ -22,9 +22,9 @@ string NumToBinary(uint8_t num, int num_bits = 8) {
 }
 
 unsigned int multiple_mod_single(string coeff) {       // x.g(x) mod m(x)
-    uint8_t value1 = 0x1B;  // he so da thuc sau dich: 00011011
+    uint8_t value1 = 0x03;  // he so da thuc sau dich: 00011011
     uint8_t value2 = (uint8_t)string_to_bit(coeff); 
-    bool highest_bit = (value2 & 0x80) != 0;           // kiem tra bit dau tien cua da thuc sau khi nhan 
+    bool highest_bit = (value2 & 0x08) != 0;           // kiem tra bit dau tien cua da thuc sau khi nhan 
     value2 <<= 1;
     if (highest_bit) {
         value2 ^= value1;
@@ -46,10 +46,7 @@ unsigned int multiple_mod_result(string coeff_fx, string coeff_gx) {   // cong c
 
 int main() {
     string coefficient_fx, coefficient_gx;
-    coefficient_fx = "00100110";  // f(x) = x^5 + x^2 + x
-    coefficient_gx = "10011110";  // g(x) = x^7 + x^4 + x^3 + x^2 + x
-    //cin >> hesodathucA >> hesodathucB;
-    //cout << ketqua_phepnhan("1", "10011110") << endl;
+    coefficient_fx = "0110";  // f(x) = x^5 + x^2 + x
+    coefficient_gx = "1011";  // g(x) = x^7 + x^4 + x^3 + x^2 + x
     cout << NumToBinary(multiple_mod_result(coefficient_fx, coefficient_gx));
-
 }
