@@ -22,10 +22,11 @@ string NumToBinary(uint8_t num, int num_bits = 4) {
 }
 
 unsigned int multiple_mod_single(string coeff) {       // x.g(x) mod m(x)
-    uint8_t value1 = 0x03;  // he so da thuc sau dich: 00011011
+    uint8_t value1 = 0x03;  // he so da thuc sau dich: 0011
     uint8_t value2 = (uint8_t)string_to_bit(coeff); 
     bool highest_bit = (value2 & 0x08) != 0;           // kiem tra bit dau tien cua da thuc sau khi nhan 
     value2 <<= 1;
+    value2 &= 0x0F;            // giu lai 4 bit thap nhat
     if (highest_bit) {
         value2 ^= value1;
     }
@@ -46,7 +47,7 @@ unsigned int multiple_mod_result(string coeff_fx, string coeff_gx) {   // cong c
 
 int main() {
     string coefficient_fx, coefficient_gx;
-    coefficient_fx = "0110";  // f(x) = x^5 + x^2 + x
-    coefficient_gx = "1011";  // g(x) = x^7 + x^4 + x^3 + x^2 + x
+    coefficient_fx = "0110";  
+    coefficient_gx = "1011";  
     cout << NumToBinary(multiple_mod_result(coefficient_fx, coefficient_gx));
 }
