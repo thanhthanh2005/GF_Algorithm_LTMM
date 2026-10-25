@@ -31,13 +31,13 @@ unsigned int multiple_mod_single(string hesoB) {       // x.g(x) mod m(x)
 }
 
 unsigned int multiple_mod_result(string heso1, string heso2) {
-    auto final_result = 0;
-    for (int i = heso1.length(); i >= 0; i--) {
+    unsigned int final_result = 0;
+    for (int i = heso1.length() - 1; i >= 0; i--) {
+        unsigned int tmp = multiple_mod_single(heso2);
+        heso2 = ToBinary(tmp);
         char c = heso1[i];
         if (c == '1') {
-            auto tmp = multiple_mod_single(heso2);
             final_result ^= tmp;
-            heso2 = ToBinary(tmp);
         }
     }
     return final_result;
