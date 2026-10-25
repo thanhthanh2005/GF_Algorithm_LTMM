@@ -2,7 +2,6 @@
 #include <cstdint>
 using namespace std;
 
-
 const int max_degree = 8;
 const string heso_dathuctoigian = "100011011";
 
@@ -23,34 +22,41 @@ string ToBinary(uint8_t num, int num_bits = 8) {
 }
 
 unsigned int multiple_mod_single(string hesoB) {       // x.g(x) mod m(x)
-    uint8_t value1 = string_to_bit(heso_dathuctoigian);
-    uint8_t value2 = string_to_bit(hesoB) << 1;
-    if (hesoB[0] == '1') return value1 ^ value2;
-    else return value2;
+    uint8_t value1 = (uint8_t)string_to_bit(heso_dathuctoigian);
+    uint8_t value2 = (uint8_t)string_to_bit(hesoB) << 1; 
+
+
+    bool highest_bit = (value2 & 0x80) != 0;
+
+    value2 <<= 1;
+
+    if (highest_bit) {
+        value2 ^= value1;
+    }
+
+    return value2;
 
 }
 
 unsigned int multiple_mod_result(string heso1, string heso2) {
     unsigned int final_result = 0;
     for (int i = heso1.length() - 1; i >= 0; i--) {
-        unsigned int tmp = multiple_mod_single(heso2);
-        heso2 = ToBinary(tmp);
         char c = heso1[i];
         if (c == '1') {
-            final_result ^= tmp;
+            final_result ^= multiple_mod_single(heso2);
         }
+        unsigned int tmp = multiple_mod_single(heso2);
+        heso2 = ToBinary(tmp);   
     }
     return final_result;
 }
 
-
 int main() {
     string hesodathucA, hesodathucB;
-    hesodathucA = "00100110";
-    hesodathucB = "10011110";
+    hesodathucA = "00100110";  // f(x) = x^5 + x^2 + x
+    hesodathucB = "10011110";  // g(x) = x^7 + x^4 + x^3 + x^2 + x
     //cin >> hesodathucA >> hesodathucB;
     //cout << ketqua_phepnhan("1", "10011110") << endl;
-
-    cout << multiple_mod_result(hesodathucA, hesodathucB);
+    cout << ToBinary(multiple_mod_result(hesodathucA, hesodathucB));
 
 }
