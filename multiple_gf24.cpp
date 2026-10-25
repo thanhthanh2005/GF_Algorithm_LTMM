@@ -42,7 +42,7 @@ unsigned int multiple_mod_result(string heso1, string heso2) {
     unsigned int final_result = 0;
     for (int i = heso1.length() - 1; i >= 0; i--) {
         if (heso1[i] == '1') {
-            final_result ^= multiple_mod_single(heso2);
+            final_result ^= string_to_bit(heso2);
         }
         unsigned int tmp = multiple_mod_single(heso2);
         heso2 = ToBinary(tmp);   
